@@ -32,6 +32,7 @@ namespace Project.Controllers
                 return View(dtblProdcut); //passing data to View 
         }
 
+
        
 
         // GET: Product/Create -> this route get the form for insert new prodcut
@@ -67,27 +68,72 @@ namespace Project.Controllers
                 return RedirectToAction("Index"); //redirection 
         }
 
-        // GET: Product/Edit/5
+
+
+
+        // GET: Product/Edit/5 ->
         public ActionResult Edit(int id)
         {
-            return View();
-        }
-
-        // POST: Product/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            ProductModel productModel = new ProductModel(); //
+            DataTable dtblProduct = new DataTable(); // 
+            using (SqlConnection sqlConn = new SqlConnection(connectionString)) // 
             {
-                // TODO: Add update logic here
+                sqlConn.Open(); // 
 
+                string query = "SELECT * FROM Product WHERE Id = @Id";
+                SqlDataAdapter sqlDa = new SqlDataAdapter(query, sqlConn); //
+                sqlDa.SelectCommand.Parameters.AddWithValue("@Id", id);
+                sqlDa.Fill(dtblProduct); // 
+            }
+            if(dtblProduct.Rows.Count == 1)
+            {
+                productModel.Id = Convert.ToInt32(dtblProduct.Rows[0][0].ToString()); // 
+                productModel.Name = dtblProduct.Rows[0][1].ToString();
+                productModel.Description = dtblProduct.Rows[0][2].ToString();
+                productModel.Category = dtblProduct.Rows[0][3].ToString();
+                productModel.Manufacturer= dtblProduct.Rows[0][4].ToString();
+                productModel.Supplier= dtblProduct.Rows[0][5].ToString();
+                productModel.Price = Convert.ToDecimal(dtblProduct.Rows[0][6].ToString());
+
+                return View(productModel); //
+            }
+            else
+            {
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
         }
+
+        // POST: Product/Edit/5 ->
+        [HttpPost]
+        public ActionResult Edit(ProductModel product)
+        {
+            using (SqlConnection sqlConn = new SqlConnection(connectionString)) //by which connection
+            {
+                sqlConn.Open(); //open connection
+
+                string query = "UPDATE Product SET Name = @Name, Description = @Description, Category = @Category, Manufacturer = @Manufacturer, Supplier = @Supplier, Price = @Price WHERE Id = @Id"; //query for edit new product
+
+                SqlCommand sqlCmd = new SqlCommand(query, sqlConn); //handling query over connection
+
+                sqlCmd.Parameters.AddWithValue("@Id", product.Id); //adding values
+                sqlCmd.Parameters.AddWithValue("@Name", product.Name); 
+                sqlCmd.Parameters.AddWithValue("@Description", product.Description);
+                sqlCmd.Parameters.AddWithValue("@Category", product.Category);
+                sqlCmd.Parameters.AddWithValue("@Manufacturer", product.Manufacturer);
+                sqlCmd.Parameters.AddWithValue("@Supplier", product.Supplier);
+                sqlCmd.Parameters.AddWithValue("@Price", product.Price);
+
+                sqlCmd.ExecuteNonQuery(); //execute query
+
+                //sqlConn.Close(); //close connection
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
 
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
