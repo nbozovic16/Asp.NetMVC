@@ -125,7 +125,7 @@ namespace Project.Controllers
 
                 sqlCmd.ExecuteNonQuery(); //execute query
 
-                //sqlConn.Close(); //close connection
+                sqlConn.Close(); //close connection
 
             }
 
@@ -138,23 +138,24 @@ namespace Project.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (SqlConnection sqlConn = new SqlConnection(connectionString)) //by which connection
+            {
+                sqlConn.Open(); //open connection
+
+                string query = "DELETE FROm Product WHERE Id = @Id"; //query for delete new product
+
+                SqlCommand sqlCmd = new SqlCommand(query, sqlConn); //handling query over connection
+
+                sqlCmd.Parameters.AddWithValue("@Id", id); //passing parameter
+
+                sqlCmd.ExecuteNonQuery(); //execute query
+
+                sqlConn.Close(); //close connection
+            }
+
+            return RedirectToAction("Index");
         }
 
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

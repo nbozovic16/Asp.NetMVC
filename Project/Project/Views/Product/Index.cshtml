@@ -3,6 +3,13 @@
     ViewBag.Title = "Index";
 }
 
+    <div class="add-new-tab">
+        <a href="@Url.Action("Create", "Product")">Add Product</a>
+    </div>
+    
+
+
+
 <table class="table table-bordered table-striped">
     <tr>
         <th>Product name: </th>
@@ -24,13 +31,25 @@
             <td>@Model.Rows[i][6]</td>
             <td>
                 <a href="@Url.Action("Edit", "Product", new { @id = Model.Rows[i][0] })">Edit</a>
+                <a href="@Url.Action("Delete", "Product", new { @id = Model.Rows[i][0] })">Delete</a>
             </td>
         </tr>
     }
 </table>
-<hr />
 
-<a href="@Url.Action("Create", "Product")">Add Product</a>
+<style>
+    .add-new-tab{
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .import-tab{
+
+    }
+
+</style>
+
+
 
 
 
