@@ -192,7 +192,7 @@ namespace Project.Controllers
                 });
                 ViewBag.Success = "Success";
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
