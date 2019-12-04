@@ -3,10 +3,12 @@
     ViewBag.Title = "Index";
 }
 
-    <div class="add-new-tab">
-        <a href="@Url.Action("Create", "Product")">Add Product</a>
-    </div>
-    
+<div class="add-new-tab">
+    <a href="@Url.Action("Create", "Product")">Add Product</a>
+</div>
+<hr />
+
+
 
 
 
@@ -20,7 +22,7 @@
         <th>Price:  </th>
         <th>Options</th>
     </tr>
-    @for(int i = 0; i < Model.Rows.Count; i++)
+    @for (int i = 0; i < Model.Rows.Count; i++)
     {
         <tr>
             <td>@Model.Rows[i][1]</td>
@@ -36,17 +38,28 @@
         </tr>
     }
 </table>
+<hr />
+@using (Html.BeginForm("Import", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        @ViewBag.Error
+        @ViewBag.Success
+        <br />
+        JSON file <input type="file" , name="jsonFile" />
+        <br />
+        <input type="submit" value="Import" />
+    </div>
+}
+<hr />
 
 <style>
-    .add-new-tab{
+    .add-new-tab {
         padding-top: 30px;
         padding-bottom: 30px;
     }
 
-    .import-tab{
-
+    .import-tab {
     }
-
 </style>
 
 

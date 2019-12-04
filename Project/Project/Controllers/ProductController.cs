@@ -6,12 +6,15 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using Project.Models;
+using System.IO;
+using Newtonsoft.Json;
+
 
 namespace Project.Controllers
 {
     public class ProductController : Controller
     {
-        string connectionString = @"Data Source=.;Initial Catalog=Asp.NetMVC;Integrated Security=True"; //connectio to DB
+        string connectionString = @"Data Source=.;Initial Catalog=Asp.NetMVC;Integrated Security=True"; //connection to DB
         
 
 
@@ -155,6 +158,43 @@ namespace Project.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        //GET: Product from JSON file
+        
+        private myDemoEntities mde = new myDemoEntities();
+        public ActionResult Import(HttpPostedFileBase jsonFile)
+        {
+            if(! Path.GetFileName(jsonFile.FileName).EndsWith(".json"))
+            {
+                ViewBag.Error = "Invalid file type";
+            }
+            else
+            {
+                jsonFile.SaveAs(Server.MapPath("~/JSONFiles/" + Path.GetFileName(jsonFile.FileName)) );
+                StreamReader streamReader = new StreamReader(Server.MapPath("~/JSONFiles/" + Path.GetFileName(jsonFile.FileName)) );
+                string data = streamReader.ReadToEnd();
+
+                List<Product> products = JsonConvert.DeserializeObject<List<Product>>(data);
+
+                products.ForEach(p => {
+                    Product product = new Product()
+                    {
+                        Name = p.Name,
+                        Description = p.Description,
+                        Category = p.Category,
+                        Manufacturer = p.Manufacturer,
+                        Supplier = p.Supplier,
+                        Price = p.Price  
+                    };
+                    mde.Products.Add(product);
+                    mde.SaveChanges();
+                });
+                ViewBag.Success = "Success";
+            }
+            return View("Index");
+        }
+
 
         
     }

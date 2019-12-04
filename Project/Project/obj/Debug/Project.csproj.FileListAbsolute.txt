@@ -74,3 +74,7 @@ C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\obj\Debug\Project.csproj.Cor
 C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\obj\Debug\Project.csproj.CopyComplete
 C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\obj\Debug\Project.dll
 C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\obj\Debug\Project.pdb
+C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\bin\EntityFramework.dll
+C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\bin\EntityFramework.SqlServer.dll
+C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\bin\EntityFramework.xml
+C:\Users\NEMANJA\Desktop\Asp.NetMVC\Project\Project\bin\EntityFramework.SqlServer.xml

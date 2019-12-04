@@ -1,0 +1,40 @@
+
+	[{
+		"Id":1, 
+		"Name":"test", 
+		"Description":"test", 
+		"Category":"test",
+		"Manufacturer":"test",
+		"Supplier":"test",
+		"Price": 1
+	},
+	
+	{
+		"Id":2, 
+		"Name":"test", 
+		"Description":"test", 
+		"Category":"test",
+		"Manufacturer":"test",
+		"Supplier":"test",
+		"Price": 2
+	},
+	
+	{
+		"Id":3, 
+		"Name":"test", 
+		"Description":"test", 
+		"Category":"test",
+		"Manufacturer":"test",
+		"Supplier":"test",
+		"Price": 3
+	},
+	
+	{
+		"Id":4, 
+		"Name":"test", 
+		"Description":"test", 
+		"Category":"test",
+		"Manufacturer":"test",
+		"Supplier":"test",
+		"Price": 4
+	}]
